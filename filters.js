@@ -342,9 +342,6 @@ const inputMoneyMask = function (value) {
             let mask = `${value}`.replace(/\D/g, "");
 
             if (mask.length > 2) {
-              if (mask[0] == 0 && mask[1] == 0 && mask[2] == 0) {
-                mask = "";
-              }
               if (mask[0] == 0 && mask[1] == 0) {
                 mask = mask.replace("00", "");
               }
