@@ -337,6 +337,52 @@ const convertMoneyInputMask = (value) => {
   return value;
 };
 
+const inputMoneyMask = function (value) {
+          if (value) {
+            let mask = `${value}`.replace(/\D/g, "");
+
+            if (mask.length > 2) {
+              if (mask[0] == 0 && mask[1] == 0 && mask[2] == 0) {
+                mask = "";
+              }
+              if (mask[0] == 0 && mask[1] == 0) {
+                mask = mask.replace("00", "");
+              }
+
+              if (mask[0] == 0) {
+                mask = mask.replace("0", "");
+              }
+            }
+
+            if (mask.length == 1) {
+              mask = "00" + mask;
+            }
+
+            if (mask.length == 2) {
+              mask = "0" + mask;
+            }
+
+            if (mask == "000") {
+              mask = "";
+            }
+
+            if (!mask || Number(mask) <= 0) {
+              return "";
+            }
+
+            const contador = (value.length - 5) / 3;
+
+            mask = mask.replace(/^([.\d]+)(\d{2})$/, "$1,$2");
+            for (let i = 0; i < contador; i += 1) {
+              mask = mask.replace(/(\d+)(\d{3})([.,\d]+)$/, "$1.$2$3");
+            }
+
+            mask = `R$ ${mask}`;
+            return mask;
+          }
+          return value;
+        };
+
 const removeMoneyMask = (value) => {
   const stringValue = `${value}`.replace(/\D/g, "");
   if (stringValue.length === 1) {
